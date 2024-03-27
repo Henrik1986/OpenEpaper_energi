@@ -1,0 +1,200 @@
+alias: "OpenEpaper - El"
+#unique_id: OpenEpaper_el
+trigger:
+  - platform: time_pattern
+    minutes: /30
+condition:
+  - condition: time
+    after: "05:45:00"
+    before: "23:15:00"
+action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id: open_epaper_link.000006f9fbf5b7df
+    data:
+      background: white
+      dry-run: false
+      ttl: 60
+      rotate: 0
+      payload:
+####################################TABELL######################################
+        - type: line  #FÖRSTA LINJEN RAKT NER
+          fill: black
+          width: 2
+          x_start: 174
+          y_start: 0
+          x_end: 174
+          y_end: 125
+        - type: line  #ANDRA LINJEN RAKT NER
+          fill: black
+          width: 2
+          x_start: 348
+          y_start: 0
+          x_end: 348
+          y_end: 125
+        - type: line  #LÅNGA LINJEN
+          fill: black
+          width: 2
+          x_start: 0
+          y_start: 124
+          x_end: 522
+          y_end: 124
+####################################SOLCELLER##################################
+        - type: text                                             #TEXT SOLCELLER
+          value: "Solceller"
+          font: ppb.ttf
+          x: 76
+          "y": 20
+          size: 20
+          color: black
+          anchor: mm
+        - type: icon
+          value: solar-power-variant-outline                              #IKON
+          x: 118
+          "y": 10
+          size: 20
+          color: black
+        - type: text                                            #TEXT PRODUCERAT
+          value: Producerat
+          font: ppb.ttf
+          x: 87
+          "y": 42
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                        #TEXT PRODUCERAT kWh
+          value: "{{ states('sensor.svea_solar_total_current_day_energy')| round (1)}} kWh"
+          font: ppb.ttf
+          x: 87
+          "y": 57
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                               #TEXT ANVÄNDT
+          value: Använt
+          font: ppb.ttf
+          x: 87
+          "y": 81
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                            #TEXT ANVÄNT kWh
+          value: "{{ states('sensor.forbrukad_solel_dag')| round (1)}} kWh"
+          font: ppb.ttf
+          x: 87
+          "y": 96
+          size: 15
+          color: black
+          anchor: mm
+####################################KÖPT########################################
+        - type: text
+          value: "Köpt"
+          font: ppb.ttf
+          x: 251
+          "y": 20
+          size: 20
+          color: black
+          anchor: mm
+        - type: icon
+          value: transmission-tower-import                                 #IKON
+          x: 279
+          "y": 8
+          size: 20
+          color: black
+        - type: text                                                    #TEXT EL
+          value: Import
+          font: ppb.ttf
+          x: 261
+          "y": 42
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                                #TEXT El kWh
+          value: "{{ states('sensor.energy_in_day')| round (1)}} kWh"
+          font: ppb.ttf
+          x: 261
+          "y": 57
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                                    #TEXT KR
+          value: Kostnad
+          font: ppb.ttf
+          x: 261
+          "y": 81
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                                    #TEXT KR
+          value: "≈ {{ states('sensor.kostnad_idag')| round (1)}} Kr"
+          font: ppb.ttf
+          x: 261
+          "y": 96
+          size: 15
+          color: black
+          anchor: mm
+####################################SÅLT########################################
+        - type: text
+          value: "Sålt"
+          font: ppb.ttf
+          x: 426
+          "y": 20
+          size: 20
+          color: black
+          anchor: mm
+        - type: icon
+          value: transmission-tower-export                                 #IKON
+          x: 451
+          "y": 8
+          size: 20
+          color: black
+        - type: text                                                    #TEXT EL
+          value: Export
+          font: ppb.ttf
+          x: 435
+          "y": 42
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                                #TEXT El kWh
+          value: "{{ states('sensor.el_export_idag')| round (1)}} kWh"
+          font: ppb.ttf
+          x: 435
+          "y": 57
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                                    #TEXT KR
+          value: Förtjänst
+          font: ppb.ttf
+          x: 435
+          "y": 81
+          size: 15
+          color: black
+          anchor: mm
+        - type: text                                                    #TEXT KR
+          value: "≈ {{ states('sensor.el_salt_idag')| round (1)}} Kr"
+          font: ppb.ttf
+          x: 435
+          "y": 96
+          size: 15
+          color: black
+          anchor: mm
+####################################SISTA RADEN#################################
+        - type: text
+          value: "Uppdaterad: {{ ((state_attr('automation.openepaper_el', 'last_triggered') ) | as_local).strftime('%H:%M') }}"
+          font: ppb.ttf
+          x: 85
+          "y": 140
+          size: 15
+          color: black
+          anchor: mm
+        - type: text
+          value: "Totalt idag: ≈ {{ states('sensor.el_kostnad_netto_idag')| round (1)}} kr "
+          font: ppb.ttf
+          x: 435
+          "y": 140
+          size: 15
+          color: black
+          anchor: mm
+mode: single
