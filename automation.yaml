@@ -1,5 +1,4 @@
 alias: "OpenEpaper - El"
-#unique_id: OpenEpaper_el
 trigger:
   - platform: time_pattern
     minutes: /30
@@ -10,7 +9,7 @@ condition:
 action:
   - service: open_epaper_link.drawcustom
     target:
-      entity_id: open_epaper_link.000006f9fbf5b7df
+      entity_id: open_epaper_link.ADD_YOUR_TAG
     data:
       background: white
       dry-run: false
@@ -63,7 +62,7 @@ action:
           color: black
           anchor: mm
         - type: text                                        #TEXT PRODUCERAT kWh
-          value: "{{ states('sensor.svea_solar_total_current_day_energy')| round (1)}} kWh"
+          value: "{{ states('sensor.ADD_SENSOR_FOR_PROD_SUN_POWER')| round (1)}} kWh"
           font: ppb.ttf
           x: 87
           "y": 57
@@ -79,7 +78,7 @@ action:
           color: black
           anchor: mm
         - type: text                                            #TEXT ANVÄNT kWh
-          value: "{{ states('sensor.forbrukad_solel_dag')| round (1)}} kWh"
+          value: "{{ states('sensor.ADD_SENSOR_FOR_USED_SUN_POWER')| round (1)}} kWh"
           font: ppb.ttf
           x: 87
           "y": 96
@@ -110,7 +109,7 @@ action:
           color: black
           anchor: mm
         - type: text                                                #TEXT El kWh
-          value: "{{ states('sensor.energy_in_day')| round (1)}} kWh"
+          value: "{{ states('sensor.ADD_SENSOR_FOR_IMPORT_FROM_GRID')| round (1)}} kWh"
           font: ppb.ttf
           x: 261
           "y": 57
@@ -126,7 +125,7 @@ action:
           color: black
           anchor: mm
         - type: text                                                    #TEXT KR
-          value: "≈ {{ states('sensor.kostnad_idag')| round (1)}} Kr"
+          value: "≈ {{ states('sensor.ADD_SENSOR_FOR_COST_FROM_GRID')| round (1)}} Kr"
           font: ppb.ttf
           x: 261
           "y": 96
@@ -157,7 +156,7 @@ action:
           color: black
           anchor: mm
         - type: text                                                #TEXT El kWh
-          value: "{{ states('sensor.el_export_idag')| round (1)}} kWh"
+          value: "{{ states('sensor.ADD_SENSOR_FOR_SOLD_ENERGY_TODAY')| round (1)}} kWh"
           font: ppb.ttf
           x: 435
           "y": 57
@@ -173,7 +172,7 @@ action:
           color: black
           anchor: mm
         - type: text                                                    #TEXT KR
-          value: "≈ {{ states('sensor.el_salt_idag')| round (1)}} Kr"
+          value: "≈ {{ states('sensor.ADD_SENSOR_FOR_PROFIT_TODAY')| round (1)}} Kr"
           font: ppb.ttf
           x: 435
           "y": 96
@@ -182,7 +181,7 @@ action:
           anchor: mm
 ####################################SISTA RADEN#################################
         - type: text
-          value: "Uppdaterad: {{ ((state_attr('automation.openepaper_el', 'last_triggered') ) | as_local).strftime('%H:%M') }}"
+          value: "Uppdaterad: {{ ((state_attr('automation.ADD_THE_NAME_ON_YOUR_AUTOMATION', 'last_triggered') ) | as_local).strftime('%H:%M') }}"
           font: ppb.ttf
           x: 85
           "y": 140
@@ -190,7 +189,7 @@ action:
           color: black
           anchor: mm
         - type: text
-          value: "Totalt idag: ≈ {{ states('sensor.el_kostnad_netto_idag')| round (1)}} kr "
+          value: "Totalt idag: ≈ {{ states('sensor.ADD_SENSOR_FOR_COST_NETTO_TODAY')| round (1)}} kr "
           font: ppb.ttf
           x: 435
           "y": 140
